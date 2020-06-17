@@ -1,0 +1,11 @@
+
+<view class="login">
+  <view class="button">
+    <van-button type="primary" size="large" bind:click="login" open-type="getUserInfo">授权登录</van-button>
+  </view>
+</view>
+<view class="back">
+  <view class="button">
+    <van-button type="default" size="large" bind:click="back" >返回首页</van-button>
+  </view>
+</view>

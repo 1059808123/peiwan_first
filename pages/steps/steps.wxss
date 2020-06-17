@@ -1,0 +1,52 @@
+/* pages/steps/steps.wxss */
+.stepsDes{
+  margin-top: 30rpx;
+}
+
+.body{
+  margin-top: 50rpx;
+  width: 100%;
+  margin-bottom: 20rpx;
+}
+
+.bottom{
+  margin-top: 50rpx;
+  justify-content: center;
+  display: flex;
+  
+}
+
+.stepTwo{
+  text-align: center;
+  width: 100%;
+  margin-bottom: 40rpx;
+}
+
+.item {
+  display: inline-block;
+  width: 22px;
+  margin-right: 5px;
+  color: #fff;
+  font-size: 12px;
+  text-align: center;
+  background-color: #1989fa;
+  border-radius: 2px;
+}
+
+.cicle{
+  justify-content: center;
+  display: flex;
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.nameShow{
+  text-align: center;
+  width: 100%;
+}
+
+.imgshow{
+  justify-content: center;
+  display: flex;
+
+}

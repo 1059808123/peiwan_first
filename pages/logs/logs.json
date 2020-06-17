@@ -1,4 +1,5 @@
 {
-  "navigationBarTitleText": "查看启动日志",
-  "usingComponents": {}
+  "navigationBarTitleText": "抢单中心",
+  "usingComponents": {
+  }
 }

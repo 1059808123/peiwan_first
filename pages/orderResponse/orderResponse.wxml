@@ -1,0 +1,37 @@
+<!--pages/orderResponse/orderResponse.wxml-->
+<scroll-view scroll-y="true">
+    <view  wx:for="{{responseList}}" wx:for-item="item" data-userid="{{item.fromUserId}}" wx:key="fromUserId" bindtap="click">
+      <van-card  
+        thumb="{{item.coPlayerPhoto}}" 
+        tag="{{item.tag}}"
+        
+      >
+      <view class="priceDes" slot="price">
+        ¥{{item.price}}/小时
+      </view>
+
+
+      <!-- <view slot="tags" wx:for="{{item.skills}}" wx:for-item="item" style="display:inline-block" wx:key="name">
+        <view class="test">
+          <van-tag round type="success">{{item.name}} </van-tag>
+        </view>
+      </view> -->
+
+      <view class="nameTitle" slot="title">
+        <view class="name">
+          {{item.userName}}
+        </view>  
+        <view class="gender" wx:if="{{item.gender=='female'}}">
+            <van-tag round type="warning"> ♂ {{item.userAge}}</van-tag>
+          
+        </view>
+        <view class="gender" wx:else>
+          <van-tag round type="primary"> ♀ {{item.userAge}}</van-tag>
+              
+        </view>
+      </view>
+      </van-card>
+      <van-divider />
+    </view> 
+    </scroll-view>
+    

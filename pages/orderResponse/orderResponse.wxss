@@ -1,0 +1,13 @@
+/* pages/orderResponse/orderResponse.wxss */
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.block {
+  width: 90%;
+  height: 90%;
+  
+}

@@ -1,6 +1,96 @@
-<!--logs.wxml-->
-<view class="container log-list">
-  <block wx:for="{{logs}}" wx:for-item="log">
-    <text class="log-item">{{index + 1}}. {{log}}</text>
-  </block>
+<view class = "page">
+  <view>
+    <van-search
+      value="{{value}}"
+      input-align="center"
+      placeholder="请输入关键词"
+    />
+  </view>
+  <view class="zhanbo">
+  <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+    <block wx:for="{{zhanboImg}}" wx:key="key">
+      <swiper-item>
+        <image wx:if="{{item}}"  src="{{item}}" bindtap="test"/>
+      </swiper-item>
+    </block>
+  </swiper>
 </view>
+
+<!-- <view class="{{scrollTop>65?'pickFloat':'choose'}}" >
+  <view class="wordChoose">
+    <text>筛选:</text>
+  </view>
+  <view class="pickerChoose" >
+    
+    <picker mode="multiSelector" bindchange="bindCustomPickerChange" bindcolumnchange="bindCustomPickerColumnChange" value="{{customIndex}}"range="{{onlyArray}}"
+ >
+ <view>
+  已选大区：{{onlyArray[0][customIndex[0]]}}，{{onlyArray[1][customIndex[1]]}}
+ </view>
+    </picker>
+</view>
+  
+</view> -->
+
+<view class="orders">
+  <scroll-view scroll-y="true">
+    <view class="ordersScan" wx:for="{{orders}}" wx:for-item="item"  wx:key="{{userId}}">
+    <van-card  
+      price="{{item.orderPrice}}" 
+      desc="胜利要求:{{item.orderIsWarn}}    保证金:￥{{item.orderWarn}}" 
+      title="{{orderGameName}}抢单信息" 
+      thumb="{{img}}" 
+      num="{{item.orderTime}}" 
+      >
+  <view slot="tags">
+    <van-tag round type="success">{{item.orderGameBigRange}}</van-tag>
+    <van-tag round type="success">{{item.orderGameSmallRange}}</van-tag>
+    <van-tag round type="success">{{item.orderGameType}}</van-tag>
+  </view>
+  <view slot="footer">
+    <view wx:if="{{item.status == 'exist'}}" >
+      <van-button type="primary"round size="small"  wx:for-index="index" data-index="{{index}}" bind:click="get">立即抢单</van-button>
+    </view>
+    <view wx:elif="{{item.status == 'getting'}}">
+      <van-button type="info"round size="small" >抢单中</van-button>
+    </view>  
+    <view wx:elif="{{item.status == 'end'}}">
+      <van-button type="primary"round size="small" color="#708090">已结束</van-button>
+    </view>  
+  </view>
+ </van-card>
+ <van-divider />
+    <!-- <van-card title=item.name desc="{{item.zone[0]}} || {{item.zone[1]}} || 游戏段位:{{item.start}}" tag={{item.start}}/> -->
+      <!-- <view class="orderStruct">
+        <view class="orderName">
+          {{item.name}}
+        </view>
+        <view class="orderInfo">
+          {{item.zone[0]}} || {{item.zone[1]}} || 游戏段位:{{item.start}}
+        </view>
+        <view class="priceDescription">
+          <view class="warrantedPrice" style="display:inline-block"  >
+            保证金: ¥{{item.warrantedPrice}}
+          </view>
+          <view class="orderPrice" style="display:inline-block">
+            价格:¥{{item.price}}
+          </view>
+        </view>
+        <view class="bossName" >
+          <view >
+            老板ID:{{item.boss}}
+          </view>
+          <view style="display:inline-block">
+            语音要求:{{item.isTalk}}
+          </view>
+          <view class="time" style="display:inline-block">
+            游戏时长: {{item.gameTime}} 小时
+          </view>
+        </view>
+      </view>-->
+    </view> 
+
+  </scroll-view>
+</view>
+</view>
+<van-notify id="van-notify" />

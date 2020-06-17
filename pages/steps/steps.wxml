@@ -1,0 +1,139 @@
+<!--pages/steps/steps.wxml-->
+<view wx:if="{{active < 4}}">
+  <view class="stepsDes">
+    <van-steps
+      steps="{{ steps }}"
+      active="{{ active }}"
+    />
+  </view>
+
+  <view class="body">
+    <view wx:if="{{active == 0}}">
+      <picker range="{{columns}}" value="{{index}}" bindchange="onChange">
+        <van-cell-group>
+          <van-cell title="游戏选择" value="{{columns[index]}}" arrow-direction="down" is-link/>
+        </van-cell-group>
+      </picker>
+      <van-cell-group>
+        <van-field
+          value="{{ time }}"
+          required
+          clearable
+          label="陪玩时长"
+          type="number"
+          placeholder="请输入陪玩时长"
+          bind:change="changeTime"
+        />
+        <van-field
+          value="{{ price }}"
+          required
+          clearable
+          label="陪玩单价"
+          type="number"
+          placeholder="请输入协议后的陪玩单价"
+          bind:change="changePrice"
+        />
+
+        <van-cell title="总价" value="{{allPrice}}" />
+      </van-cell-group>
+    </view>
+
+    <view wx:if="{{active == 1}}" class="stepTwo">
+      如果准备游戏，请点击按钮开始接受服务
+    </view>
+
+    <view wx:if="{{active == 2}}" class="countDown">
+      <view class="stepTwo">服务时间</view>
+      <view class="cicle">
+        <van-circle value="{{ rate }}" color="{{ gradientColor }}" text="剩余时间" />
+      </view>
+      <view class="cicle">
+        <van-count-down
+          time="{{ surplusTime }}"
+          use-slot
+          bind:change="restTime"
+        >
+          <text class="item">{{ timeData.hours }}</text>
+          <text class="item">{{ timeData.minutes }}</text>
+          <text class="item">{{ timeData.seconds }}</text>
+        </van-count-down>
+      </view>
+    </view>
+
+    <view wx:if="{{active == 3}}">
+      <view class="stepTwo">
+        请对服务进行评价
+      </view>
+      <view class="cicle">
+      <van-rate value="{{ star }}" bind:change="starChange" />
+      </view>
+      <view class="stepTwo">
+        详细评价一下小可爱吧
+      </view>
+      <view >
+        <van-cell-group>
+          <van-field
+            value="{{ comment }}"
+            label="评价"
+            type="textarea"
+            placeholder="请输入您的评价"
+            bind:change="commentChange"
+            autosize
+            border
+          />
+        </van-cell-group>
+      </view>
+    </view>
+
+    <view wx:if="{{active == 4}}">
+      
+    </view>
+  </view>
+
+  <view class="bottom" >
+    <view wx:if="{{active == 0}}">
+      <van-button color="#7232dd" bind:click="onClick" disabled="{{disabled}}">点击支付</van-button>
+    </view>
+    <view wx:if="{{active == 1}}">
+      <van-button color="#7232dd" bind:click="onClick" >开始服务</van-button>
+    </view>
+    <view wx:if="{{active == 2}}">
+      <view wx:if="{{rate > 0}}">
+        <van-button color="#7232dd" bind:click="onClick" >提前完成</van-button>
+      </view>
+      <view wx:else>
+        <view class="cicle">
+          <van-button color="#7232dd" bind:click="onClick" >服务完成</van-button>
+        </view>
+        <view class="stepTwo">订单会在12小时后自动完成</view>
+      </view>  
+    </view>
+
+    <view wx:if="{{active == 3}}">
+      <view class="cicle">
+          <van-button color="#7232dd" bind:click="orderEnd" >订单完成</van-button>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view wx:if="{{active == 4}}">
+<view class="imgshow">
+    <van-image
+    width="10rem"
+    height="10rem"
+    fit="contain"
+    src="{{coPlayerImg}}"
+  />
+  </view>
+  <view class="nameShow">
+    {{coPlayerName}}
+  </view>
+<van-cell-group>
+  <van-cell title="品类" value="{{gameType}}" />
+  <van-cell title="时长" value="{{time}}"  />
+  <van-cell title="单价" value="{{price}}"  />
+  <van-cell title="总价" value="{{allPrice}}"  />
+  <van-cell title="订单编号" value="{{orderId}}"  />
+</van-cell-group>
+</view>

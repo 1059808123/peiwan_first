@@ -4,51 +4,143 @@ const app = getApp()
 
 Page({
   data: {
-    motto: 'Hello World',
-    userInfo: {},
-    hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    hasMore:true,
+    netError:false,
+    isLoading:false,
+    pageIndex:0,
+    page:2,
+    coPlayer:[], 
+    type:[{
+      name:"英雄联盟",
+      img:"https://dss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2070426211,1331596930&fm=26&gp=0.jpg"
+    },{
+      name: "王者荣耀",
+        img: "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2305787666,943118815&fm=26&gp=0.jpg"
+    },{
+      name: "和平精英",
+        img: "https://dss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2249410810,515486504&fm=26&gp=0.jpg"
+    },{
+      name: "绝地求生",
+        img: "https://dss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1138039379,2471778894&fm=26&gp=0.jpg"
+    }, {
+      name: "使命召唤",
+        img: "https://dss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3226664486,3716073390&fm=26&gp=0.jpg"
+    },{
+      name: "云顶之弈",
+        img: "https://dss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1059505224,3133873445&fm=26&gp=0.jpg"
+    },]
   },
-  //事件处理函数
-  bindViewTap: function() {
-    wx.navigateTo({
-      url: '../logs/logs'
+
+  onLoad: function (options) {
+
+    var that = this;
+    wx.checkSession({
+      success: function () {
+        app.globalData.isLogin = true;
+        
+      },
+      fail: function () {
+        console.log("checksession fail")
+        
+        
+      }
+    })
+    wx.request({
+      url: 'http://localhost:8080/index',
+      data: {
+        page: 2,
+        start: 0
+      },
+      method: 'GET',
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success(res) {
+        that.setData({
+          coPlayer: res.data,
+          pageIndex:that.data.pageIndex+1
+        })
+        
+      }
     })
   },
-  onLoad: function () {
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    } else if (this.data.canIUse){
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-      }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
+
+  onReachBottom:function(){
+
+    var that = this;
+    that.setData({
+      isLoading:true
+    })
+    setTimeout(function(){
+    wx.request({
+      url: 'http://localhost:8080/index',
+      data: {
+        page: that.data.page,
+        start: that.data.pageIndex * that.data.page
+      },
+      method: 'GET',
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success(res) {
+
+        var list = that.data.coPlayer;
+        for(var index in res.data){
+          
+          list.push(res.data[index])
+        }
+
+        
+        if(res.data.length < that.data.page ){
+          that.setData({
+            isLoading:false,
+            hasMore:false
           })
         }
+      
+
+        list.concat(res.data);
+
+        that.setData({
+            pageIndex:that.data.pageIndex+1,
+            isLoading:false,
+            coPlayer:list
+        })
+      },
+      fail(){
+        that.setData({
+          isLoading:false,
+          netError:true
+        })
+      }
+    })},2000);
+  },
+
+  into:function(event){
+
+    if(app.globalData.isLogin != false){
+      wx.navigateTo({
+        url: '../createOrder/createOrder?name=' + event.currentTarget.dataset.name,
+      })
+    }else{
+      wx.navigateTo({
+        url: '../login/login',
       })
     }
   },
-  getUserInfo: function(e) {
-    console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
-    })
+  click:function(event){
+    if (app.globalData.isLogin != false){
+
+      wx.navigateTo({
+        url: '../coPlayerIndex/coPlayerIndex?id=' + event.currentTarget.dataset.userid,
+        success: function(res) {},
+        fail: function(res) {},
+        complete: function(res) {},
+      })
+    }else{
+      wx.navigateTo({
+        url: '../login/login',
+      })
+    }
   }
 })

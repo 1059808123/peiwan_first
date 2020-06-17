@@ -1,0 +1,155 @@
+<!--pages/coPlayerIndex/coPlayerIndex.wxml-->
+<view class="zhanbo">
+  <swiper indicator-dots="{{indicator}}" autoplay="{{autoplay}}" interval="{{interval}}" >
+    <block wx:for="{{zhanboImg}}"  >
+      <swiper-item>
+        <image wx:if="{{item}}"  src="{{item}}" data-index="{{index}}" bindtap="click"/>
+      </swiper-item>
+    </block>
+  </swiper>
+</view>
+
+<view class="body">
+  <view class="bodyIntr">
+    <view class="bodyImgPhoto">
+      <view class="imgPhoto">
+        <van-image
+          round
+          width="50px"
+          height="50px"
+          src="{{coPlayer.imgPhoto}}"
+        />
+    </view>
+    </view>
+    
+   <view class="others">
+     <view class="othersTop">
+        <view class="othersTopName">
+          {{coPlayer.name}}
+          <view class="gender" wx:if="{{item.gender=='female'}}">
+            <van-tag round type="warning"> ♂ {{coPlayer.userAge}}</van-tag>
+          
+        </view>
+        <view class="gender" wx:else>
+          <van-tag round type="primary"> ♀ {{coPlayer.userAge}}</van-tag>
+              
+        </view>
+        </view>
+        <view class="othersTopPick" wx:if="{{coPlayer.isPick}}">
+          <van-button round size="mini" type="default" bind:click="canclePick">已关注</van-button>
+        </view>
+        <view class="othersTopPick" wx:else>
+          <van-button round size="mini" type="primary" bind:click="pick">关注</van-button>
+        </view>
+     </view> 
+     <view class="othersBottom">
+
+        <view class='audio' wx:if="{{!bl}}" bindtap='audioPlay' >
+          <van-button icon="play-circle" type="warning" size="mini" />
+        </view>
+
+    
+        <view class='audio' wx:if="{{bl}}" bindtap='audioStop'   >
+          <van-button icon="pause-circle" type="warning" size="mini"/>
+        </view>
+        <view class="textIndr">
+            {{coPlayer.textIntroduction}}
+        </view>
+    </view>
+   </view>
+  </view>
+</view>
+
+<van-divider hairline customStyle="color: #1989fa;border-color: #1989fa;"/>
+
+<view class="skillShow">
+  <view class="swiperSkill">
+    <swiper class="swiperSkill" indicator-active-color="{{indicatorColor}}" indicator-dots="{{indicator}}" autoplay="{{autoplay}}" interval="{{interval}}" >
+      <block wx:for="{{coPlayer.skill}}" wx:for-item="item" >
+        <swiper-item>
+          <van-panel title="{{item.name}}"  status="{{coPlayer.skill[0].price}}元/小时" use-footer-slot>
+          <view class="skillDes">
+            <view class="starComments">
+              <van-icon name="star" color="#FFD700" />  {{item.starComments}} 
+            </view>
+            <view class="hasCount">
+              接单数:{{item.hasNum}}
+            </view>
+            <view class="ability">
+              <van-tag round type="success">{{item.ability}}</van-tag>
+            </view>
+          </view>
+    </van-panel>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+</view>
+
+<view class="comments">
+  <van-tabs bind:click="onClick">
+    <van-tab
+      wx:for="{{ tabs }}"
+      wx:for-item="item"
+      wx:key="index"
+      title="{{ item }}"
+    >
+      <view wx:if="{{index == 1}}" class="content">
+        <view class="commentsStar">
+          {{coPlayer.skill[0].starComments}}  
+        </view>
+        <van-rate
+          readonly
+          value="{{coPlayer.skill[0].starComments}}"
+          bind:click="onClick"
+        />
+        <view wx:for="{{comments}}" wx:for-item="item" wx:key="item.commentsId">
+          <view class="body">
+            <view class="bodyIntr">
+              <view class="bodyImgPhotoComments">
+                <view class="imgPhotoComments">
+                  <van-image
+                    round
+                    width="50px"
+                    height="50px"
+                    src="{{item.commentPhoto}}"
+                  />
+                </view>
+              </view>
+      
+              <view class="others">
+                <view class="othersTop">
+                  <view class="othersTopName">
+                    {{item.name}}
+                  </view>
+                  <view class="gender">
+                    <van-rate
+                      size="25rpx"
+                      readonly
+                      value="{{item.starComment}}"
+                      bind:click="onClick"
+                    />
+                  </view>
+                </view>
+                <view  class="othersCommentsBottom">
+                  <view wx:if="{{item.comment!='null'}}">
+                    {{item.comment}}
+                  </view>
+                  <view wx:else>
+                    这是一个默认回复
+                  </view>
+                </view>
+              </view>
+          </view>
+        </view>
+      </view>
+      </view>
+    </van-tab>
+  </van-tabs>
+</view>
+<van-dialog id="van-dialog" />
+
+<view class="pageBottom">
+<van-button round size="small" color="linear-gradient(to right, #4bb0ff, #6149f6)" bind:click="goChat">私聊</van-button>
+<van-button round size="small" color="linear-gradient(to right, #4bb0ff, #6149f6)" bind:click="orderStart">下单</van-button>
+</view>

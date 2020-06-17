@@ -1,0 +1,54 @@
+<!--pages/pickShow/pickShow.wxml-->
+<scroll-view scroll-y="true">
+    <view  wx:for="{{coPlayer}}" wx:for-item="item" data-userid="{{item.userId}}" wx:key="userId" bindtap="click">
+      <van-card  
+        thumb="{{item.userPhoto}}" 
+        tag="{{item.tag}}"
+      >
+      <view class="priceDes" slot="price">
+        ¥{{item.skills[0].price}}/小时
+      </view>
+
+      <view  slot="price-top">
+        {{item.skills[0].name}}
+      </view>
+
+      <view slot="tags" wx:for="{{item.skills}}" wx:for-item="item" style="display:inline-block" wx:key="name">
+        <view class="test">
+          <van-tag round type="success">{{item.name}} </van-tag>
+        </view>
+      </view>
+
+      <view class="nameTitle" slot="title">
+        <view class="name">
+          {{item.userName}}
+        </view>  
+        <view class="gender" wx:if="{{item.gender=='female'}}">
+            <van-tag round type="warning"> ♂ {{item.userAge}}</van-tag>
+          
+        </view>
+        <view class="gender" wx:else>
+          <van-tag round type="primary"> ♀ {{item.userAge}}</van-tag>
+              
+        </view>
+      </view>
+      </van-card>
+      <van-divider />
+    </view> 
+
+</scroll-view>
+
+<view hidden="{{!isLoading}}" class="loading">
+  <van-loading size="24px" >加载中...</van-loading>
+</view>
+<view hidden="{{isLoading}}" class="loading">
+    <view wx:if="{{hasMore && netError}}">
+        网络出错，请重试
+    </view>
+    <view wx:elif="{{hasMore}}">
+        下拉加载更多
+    </view>
+    <view wx:else>
+        已加载全部
+    </view>
+</view>

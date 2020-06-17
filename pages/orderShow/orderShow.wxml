@@ -1,0 +1,15 @@
+<!--pages/orderShow/orderShow.wxml-->
+<scroll-view scroll-y="true">
+    <view  wx:for="{{orders}}" wx:for-item="item" data-orderId="{{item.orderId}}" 
+    data-active="{{item.active}}" wx:key="orderId" bindtap="click">
+      <van-card
+        num="{{item.time}}"
+        price="{{item.price}}"
+        desc="陪玩信息"
+        title="{{item.coPlayerName}}"
+        thumb="{{ item.coPlayerImg }}"
+/>
+      <van-divider />
+    </view> 
+
+</scroll-view>

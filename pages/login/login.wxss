@@ -1,0 +1,18 @@
+/* pages/login/login.wxss */
+.login{
+  width: 100%;
+  position: fixed;
+  top:300rpx;
+  display: flex;
+  justify-content: center;
+}
+.button{
+  width: 80%;
+}
+.back{
+  width: 100%;
+  position: fixed;
+  top:450rpx;
+  display: flex;
+  justify-content: center;
+}

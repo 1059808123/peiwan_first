@@ -1,13 +1,70 @@
-<!--index.wxml-->
-<view class="container">
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
-  </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view>
+<van-grid column-num="3" border="{{ true }}">
+  <van-grid-item 
+    use-slot    
+    wx:for="{{ type }}" 
+    wx:for-item="item"
+    wx:key="name"
+    
+    >
+    <view bindtap="into" data-name="{{item.name}}">
+      <image
+        style="width: 100%; height: 90px;"
+        src="{{item.img}}"
+      />
+      {{item.name}}
+    </view>
+  </van-grid-item>
+</van-grid>
+
+<scroll-view scroll-y="true">
+    <view  wx:for="{{coPlayer}}" wx:for-item="item" data-userid="{{item.userId}}" wx:key="userId" bindtap="click">
+      <van-card  
+        thumb="{{item.userPhoto}}" 
+        tag="{{item.tag}}"
+      >
+      <view class="priceDes" slot="price">
+        ¥{{item.skills[0].price}}/小时
+      </view>
+
+      <view  slot="price-top">
+        {{item.skills[0].name}}
+      </view>
+
+      <view slot="tags" wx:for="{{item.skills}}" wx:for-item="item" style="display:inline-block" wx:key="name">
+        <view class="test">
+          <van-tag round type="success">{{item.name}} </van-tag>
+        </view>
+      </view>
+
+      <view class="nameTitle" slot="title">
+        <view class="name">
+          {{item.userName}}
+        </view>  
+        <view class="gender" wx:if="{{item.gender=='female'}}">
+            <van-tag round type="warning"> ♂ {{item.userAge}}</van-tag>
+          
+        </view>
+        <view class="gender" wx:else>
+          <van-tag round type="primary"> ♀ {{item.userAge}}</van-tag>
+              
+        </view>
+      </view>
+      </van-card>
+      <van-divider />
+    </view> 
+
+</scroll-view>
+<view hidden="{{!isLoading}}" class="loading">
+  <van-loading size="24px" >加载中...</van-loading>
+</view>
+<view hidden="{{isLoading}}" class="loading">
+    <view wx:if="{{hasMore && netError}}">
+        网络出错，请重试
+    </view>
+    <view wx:elif="{{hasMore}}">
+        下拉加载更多
+    </view>
+    <view wx:else>
+        已加载全部
+    </view>
 </view>

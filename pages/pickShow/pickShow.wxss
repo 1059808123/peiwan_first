@@ -1,0 +1,66 @@
+/* pages/pickShow/pickShow.wxss */
+.btn1 {
+  width: 80%;
+  margin-top: 20rpx;
+  background-color: burlywood;
+  color: white;
+  border-radius: 98rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.btnImg {
+  margin-right: 8rpx;
+  width: 46rpx;
+  height: 46rpx;
+}
+
+.btn1::after {
+  border-radius: 98rpx;
+  border: 0; 
+}
+.container {
+  height: 100vh;
+  background-color: #fff;
+}
+
+.tag,
+.button {
+  margin-right: 5px;
+}
+
+.van-card__footer {
+  margin-top: 5px;
+}
+.priceDes{
+  color: red;
+}
+.nameTitle{
+  display: flex;
+}
+.gender{
+  display: inline-block;
+  margin-left: 20rpx;
+  margin-top: 8rpx;
+}
+.name{
+  margin-top: 5rpx;
+  font-size: medium;
+}
+.genderDes{
+  font-size: 25rpx;
+}
+.test{
+  margin-left: 10rpx;
+}
+.gender{
+  margin-left:15rpx; 
+  display: inline-block;
+}
+.loading{
+  margin-bottom: 10rpx;
+  display: flex;
+  justify-content: center
+}

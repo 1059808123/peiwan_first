@@ -1,0 +1,116 @@
+
+<view class="gameSelect">
+   
+    <view class="gameDes">
+      <view class="gameText">游戏:</view>
+      <view class="gameName">
+        {{gameName}}
+      </view>
+      
+    </view>
+   
+
+</view>
+
+<view class="typeSelect">
+
+   <picker bindchange="bindPickerChange1" value="{{typeIndex}}" range="{{typeObjectArray}}">
+    <view class="gameDes">
+      <view class="typeText">陪玩类型:</view>
+      <view>
+        {{typeObjectArray[typeIndex]}}
+      </view>
+      <view>
+        <image src="../Images/tag_right.png" class="createImage1"></image>
+      </view>
+    </view>
+   </picker>   
+</view>
+
+<view class="rangeSelect" >
+  <picker mode="multiSelector" bindchange="bindCustomPickerChange" bindcolumnchange="bindCustomPickerColumnChange" value="{{customIndex}}"range="{{onlyArray}}"
+ >
+    <view class="gameDes">
+      <view >
+        已选大区:
+      </view>
+      <view class="rangeText">
+        {{onlyArray[0][customIndex[0]]}}，{{onlyArray[1][customIndex[1]]}}
+      </view>
+      <view>
+        <image src="../Images/tag_right.png" class="createImage2"></image>
+      </view>
+    </view>
+  </picker>
+</view>
+
+<!-- <view class="price">
+  <view class="priceText" style="display:inline-block">
+    陪玩时长:
+  </view>  
+  <input class="gameTime" type="number" style="display:inline-block" focus="true"></input>
+  <view >
+    时
+  </view>
+
+</view>
+
+<view class="price">
+  <view class="priceText" style="display:inline-block">
+    订单价格:
+  </view>  
+  <input class="gameTime" type="number" style="display:inline-block" focus="true"></input>
+  <view >
+    元
+  </view>
+
+</view> -->
+<van-cell-group>
+  <van-field
+    value="{{ time }}"
+    
+    type="number"
+    label="陪玩时长"
+    placeholder="请输入陪玩时长" 
+    bind:change="onTime"
+    bind:confirm="onConfirm"
+  />
+  <van-field
+    value="{{ price }}"
+    type="number"
+    clearable
+    label="单价"
+    placeholder="请输入陪玩单价" 
+    bind:change="onPrice"
+    bind:confirm="onConfirm"
+  />
+</van-cell-group>
+<van-cell  title="是否要求胜利" label="如果只是为了游戏开心请不要勾选，如果勾选请设当提高价格">
+  <view slot="right-icon">
+    <van-switch checked="{{ checked }}" bind:change="onChange" />
+  </view>
+</van-cell>
+<view wx:if="{{checked}}">
+  <van-cell-group>
+  <van-field
+    value="{{ warn }}"
+    clearable
+    type="number"
+    label="保证金"
+    placeholder="请输入保证金" 
+    bind:change="onWarn"
+    bind:confirm="onConfirm"
+  />
+  
+</van-cell-group>
+</view>
+
+<van-submit-bar
+  price="{{ allPrice }}"
+  disabled="{{disabled}}"
+  button-text="提交订单"
+  bind:submit="onSubmit"
+  
+/>
+<van-notify id="van-notify" />
+

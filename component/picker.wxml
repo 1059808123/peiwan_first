@@ -1,0 +1,3 @@
+<picker mode="multiSelector" bindchange="bindCustomPickerChange" bindcolumnchange="bindCustomPickerColumnChange" value="{{customIndex}}"range="{{onlyArray}}"
+ >
+ </picker>
